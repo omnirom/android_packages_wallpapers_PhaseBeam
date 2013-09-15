@@ -80,7 +80,7 @@ public class PhaseBeamWallpaper extends WallpaperService {
 
             if (mWallpaperRS == null) {
                 mWallpaperRS = new PhaseBeamRS();
-                mWallpaperRS.init(mDensityDPI, mRenderScript, getResources(), width, height);
+                mWallpaperRS.init(PhaseBeamWallpaper.this, mDensityDPI, mRenderScript, getResources(), width, height);
                 mWallpaperRS.start();
             }
 
