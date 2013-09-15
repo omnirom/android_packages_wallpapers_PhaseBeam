@@ -3,6 +3,10 @@ package com.android.phasebeam;
 import static android.renderscript.Sampler.Value.NEAREST;
 import static android.renderscript.Sampler.Value.WRAP;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import android.renderscript.Allocation;
 import android.renderscript.Matrix4f;
@@ -29,7 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import android.util.Log;
 
-public class PhaseBeamRS {
+public class PhaseBeamRS implements OnSharedPreferenceChangeListener {
     public static String LOG_TAG = "PhaseBeam";
     public static final int DOT_COUNT = 28;
     private Resources mRes;
@@ -51,12 +55,19 @@ public class PhaseBeamRS {
     private ScriptField_VertexColor_s mVertexColors;
 
     private int mDensityDPI;
+    private SharedPreferences mSharedPref;
+    private Context mContext;
 
     boolean mInited = false;
 
-    public void init(int dpi, RenderScriptGL rs, Resources res, int width, int height) {
+    public void init(Context context, int dpi, RenderScriptGL rs, Resources res, int width, int height) {
         if (!mInited) {
             mDensityDPI = dpi;
+            mContext = context;
+            mSharedPref = mContext.getSharedPreferences(PhaseBeamSelector.KEY_PREFS, 
+                                  Context.MODE_PRIVATE);
+            mSharedPref.registerOnSharedPreferenceChangeListener(this);
+
 
             mRS = rs;
             mRes = res;
@@ -96,8 +107,19 @@ public class PhaseBeamRS {
             mRS.bindRootScript(mScript);
 
             mScript.invoke_positionParticles();
+
             mInited = true;
         }
+    }
+
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        makeNewState();
+    }
+
+    void makeNewState() {
+        float hue = mSharedPref.getFloat(PhaseBeamSelector.KEY_HUE, 0);
+        mScript.set_hueAdjust(hue);
+        createBackgroundMesh();
     }
 
     private Matrix4f getProjectionNormalized(int w, int h) {
@@ -154,6 +176,7 @@ public class PhaseBeamRS {
         }
 
         int meshDataSize = meshData.size();
+        float hue = mSharedPref.getFloat(PhaseBeamSelector.KEY_HUE, 0);
         mVertexColors = new ScriptField_VertexColor_s(mRS, meshDataSize);
         for(int i=0; i<meshDataSize; i++) {
             String line = (String) meshData.get(i);
@@ -165,6 +188,7 @@ public class PhaseBeamRS {
             float blue = new Float(values[4]);
             mVertexColors.set_position(i, new Float3(xPos, yPos, 0.0f), false);
             mVertexColors.set_color(i, new Float4(red, green, blue, 1.0f), false);
+            mVertexColors.set_hue(i, hue, false);
         }
         mVertexColors.copyAll();
 
