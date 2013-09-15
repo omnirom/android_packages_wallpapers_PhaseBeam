@@ -25,7 +25,7 @@ public class PhaseBeamView extends RSSurfaceView {
             mRS.setSurface(holder, w, h);
 
             mRender = new PhaseBeamRS();
-            mRender.init(160, mRS, getResources(), w, h);
+            mRender.init(getContext(), 160, mRS, getResources(), w, h);
         }
 
     }
