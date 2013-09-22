@@ -19,9 +19,11 @@ static int numBeamParticles;
 static int numDotParticles;
 static int numVertColors;
 
+
 typedef struct __attribute__((packed, aligned(4))) Particle {
     float3 position;
     float offsetX;
+    float hue;
 } Particle_t;
 
 typedef struct VpConsts {
@@ -34,6 +36,7 @@ typedef struct VertexColor_s {
     float3 position;
     float offsetX;
     float4 color;
+    float hue;
 } VertexColor;
 
 VertexColor* vertexColors;
@@ -43,6 +46,7 @@ rs_mesh dotMesh;
 rs_mesh beamMesh;
 rs_mesh gBackgroundMesh;
 
+float hueAdjust;
 float densityDPI;
 float xOffset = 0.5;
 
@@ -91,6 +95,7 @@ void positionParticles() {
         }
         particle->position.z = z;
         particle->offsetX = 0;
+        particle->hue = hueAdjust;
     }
 
     Particle_t* beam = beamParticles;
@@ -107,6 +112,7 @@ void positionParticles() {
 
         beamParticles->position.z = z;
         beamParticles->offsetX = 0;
+        beamParticles->hue = hueAdjust;
         beamParticles++;
     }
 }
@@ -121,6 +127,7 @@ int root() {
         VertexColor* vert = vertexColors;
         for(int i=0; i<numVertColors; i++) {
             vert->offsetX = -xOffset/2.0;
+            vert->hue = hueAdjust;
             vert++;
         }
     }
@@ -160,9 +167,11 @@ int root() {
 
         beam->position.x = beam->position.x + zxBeamSpeed*beam->position.z*speedbump;
         beam->offsetX = newOffset;
+        beam->hue = hueAdjust;
         beam++;
         particle->offsetX = newOffset;
         particle->position.x = particle->position.x + zxParticleSpeed*beam->position.z*speedbump;
+        particle->hue = hueAdjust;
         particle++;
     }
 
