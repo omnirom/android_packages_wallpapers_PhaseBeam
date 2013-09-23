@@ -147,7 +147,7 @@ public class PhaseBeamSelector extends Activity {
     private void updatePrefs() {
         Editor edit = mSharedPref.edit();
         edit.putFloat(KEY_HUE, mCurrentHue);
-        edit.apply();
+        edit.commit();
     }
     
     class WallpaperConnection extends IWallpaperConnection.Stub implements ServiceConnection {

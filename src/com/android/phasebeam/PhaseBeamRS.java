@@ -93,6 +93,8 @@ public class PhaseBeamRS implements OnSharedPreferenceChangeListener {
             mScript.bind_dotParticles(mDotParticles);
             mScript.bind_beamParticles(mBeamParticles);
 
+            makeNewState();
+
             mPvConsts = new ScriptField_VpConsts(mRS, 1);
 
             createProgramVertex();
