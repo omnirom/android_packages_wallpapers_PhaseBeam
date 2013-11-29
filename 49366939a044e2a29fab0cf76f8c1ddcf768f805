@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b8ed5af_5e62cad7",
+        "filename": "res/values-de/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000315
+      },
+      "writtenOn": "2013-11-29T18:50:36Z",
+      "side": 1,
+      "message": "Leerzeichen anstelle des Tabs.\nIch denke, dass nach Wischen ein Komma gehört.",
+      "revId": "49366939a044e2a29fab0cf76f8c1ddcf768f805",
+      "serverId": "56841c99-7c94-43d4-bf0b-cb4707e66d55",
+      "unresolved": false
+    }
+  ]
+}
