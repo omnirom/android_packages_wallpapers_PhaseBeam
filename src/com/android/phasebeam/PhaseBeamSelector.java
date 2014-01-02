@@ -87,7 +87,7 @@ public class PhaseBeamSelector extends Activity {
         mWallpaperConnection = new WallpaperConnection(mWallpaperIntent);
         
         mSharedPref = getSharedPreferences(KEY_PREFS, Context.MODE_PRIVATE);
-        mCurrentHue = mSharedPref.getFloat(KEY_HUE, 0.0f);
+        mCurrentHue = mSharedPref.getFloat(KEY_HUE, 16f);
     }
     
     @Override

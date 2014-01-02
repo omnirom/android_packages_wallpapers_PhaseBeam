@@ -119,7 +119,7 @@ public class PhaseBeamRS implements OnSharedPreferenceChangeListener {
     }
 
     void makeNewState() {
-        float hue = mSharedPref.getFloat(PhaseBeamSelector.KEY_HUE, 0);
+        float hue = mSharedPref.getFloat(PhaseBeamSelector.KEY_HUE, 16f);
         mScript.set_hueAdjust(hue);
         createBackgroundMesh();
     }
@@ -178,7 +178,8 @@ public class PhaseBeamRS implements OnSharedPreferenceChangeListener {
         }
 
         int meshDataSize = meshData.size();
-        float hue = mSharedPref.getFloat(PhaseBeamSelector.KEY_HUE, 0);
+        float hue = mSharedPref.getFloat(PhaseBeamSelector.KEY_HUE, 
+16f);
         mVertexColors = new ScriptField_VertexColor_s(mRS, meshDataSize);
         for(int i=0; i<meshDataSize; i++) {
             String line = (String) meshData.get(i);
