@@ -178,8 +178,7 @@ public class PhaseBeamRS implements OnSharedPreferenceChangeListener {
         }
 
         int meshDataSize = meshData.size();
-        float hue = mSharedPref.getFloat(PhaseBeamSelector.KEY_HUE, 
-16f);
+        float hue = mSharedPref.getFloat(PhaseBeamSelector.KEY_HUE, 16f);
         mVertexColors = new ScriptField_VertexColor_s(mRS, meshDataSize);
         for(int i=0; i<meshDataSize; i++) {
             String line = (String) meshData.get(i);
