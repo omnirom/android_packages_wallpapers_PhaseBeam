@@ -57,6 +57,7 @@ public class PhaseBeamRS implements OnSharedPreferenceChangeListener {
     private int mDensityDPI;
     private SharedPreferences mSharedPref;
     private Context mContext;
+    private boolean mScrollAllowed;
 
     boolean mInited = false;
 
@@ -74,6 +75,8 @@ public class PhaseBeamRS implements OnSharedPreferenceChangeListener {
 
             mWidth = width;
             mHeight = height;
+
+            mScrollAllowed = mRes.getBoolean(R.bool.allow_scrolling);
 
             mDotParticles = new ScriptField_Particle(mRS, DOT_COUNT);
             Mesh.AllocationBuilder smb2 = new Mesh.AllocationBuilder(mRS);
@@ -272,7 +275,9 @@ public class PhaseBeamRS implements OnSharedPreferenceChangeListener {
     }
 
     public void setOffset(float xOffset, float yOffset, int xPixels, int yPixels) {
-        mScript.set_xOffset(xOffset);
+        if (mScrollAllowed) {
+            mScript.set_xOffset(xOffset);
+        }
     }
 
     public void resize(int w, int h) {
