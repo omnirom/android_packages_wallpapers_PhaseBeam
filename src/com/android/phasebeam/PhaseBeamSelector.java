@@ -44,6 +44,7 @@ import android.content.Context;
 import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Rect;
 import android.os.RemoteException;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
@@ -212,7 +213,7 @@ public class PhaseBeamSelector extends Activity {
                     final View root = view.getRootView();
                     mService.attach(this, view.getWindowToken(),
                             WindowManager.LayoutParams.TYPE_APPLICATION_MEDIA_OVERLAY,
-                            true, root.getWidth(), root.getHeight());
+                            true, root.getWidth(), root.getHeight(), new Rect());
                 } catch (RemoteException e) {
                     Log.w(LOG_TAG, "Failed attaching wallpaper; clearing", e);
                 }
