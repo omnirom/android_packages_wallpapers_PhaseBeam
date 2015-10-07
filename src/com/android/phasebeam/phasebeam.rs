@@ -100,7 +100,6 @@ void positionParticles() {
         particle->hue = hueAdjust;
     }
 
-    Particle_t* beam = beamParticles;
     numBeamParticles = rsAllocationGetDimX(rsGetAllocation(beamParticles));
     for(int i=0; i<numBeamParticles; i++) {
         float z;
